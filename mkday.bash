@@ -13,9 +13,11 @@ cp -p solve.py $day/part1.py
 cp -p solve.py $day/part2.py
 
 FILE="input/${day}/input.txt"
+mkdir -p $(dirname $FILE)
 
 if [ ! -s ./${FILE} ]
 then
+   echo "Fetching $FILE"
    wget --no-cookies --header "Cookie: session=$(<./.token)" https://adventofcode.com/2023/day/$1/input -O ${FILE}
 fi
 
