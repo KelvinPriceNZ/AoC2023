@@ -7,7 +7,13 @@ do
       for part in 1 2
       do
          soln="${day}/part${part}.py"
-         echo -n "Day $day Part $part : "
+         if [ $part -eq 1 ]
+         then
+            echo -n "Day $day "
+         else
+            echo -n "       "
+         fi
+         echo -n "Part $part : "
          if [ -s ${soln} -a -x $soln ]
          then
             $soln
