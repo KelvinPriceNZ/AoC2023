@@ -12,6 +12,8 @@ printf -v day "%02d" $1
 cp -p solve.py $day/part1.py
 cp -p solve.py $day/part2.py
 
+./render_md.py $day
+
 FILE="input/${day}/input.txt"
 mkdir -p $(dirname $FILE)
 
