@@ -2,3 +2,4 @@
 input.txt
 input/*
 __pycache__
+.idea
