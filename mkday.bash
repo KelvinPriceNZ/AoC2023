@@ -3,7 +3,11 @@
 BASEDIR=$(dirname $0)
 cd $BASEDIR
 
-[[ -z $1 ]] && exit 1
+if [[ -z $1 ]]
+then
+   echo "No day number provided"
+   exit 1
+fi
 
 printf -v day "%02d" $1
 
