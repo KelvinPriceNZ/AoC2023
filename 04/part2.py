@@ -3,7 +3,7 @@
 import os
 import sys
 import re
-
+from collections import deque
 
 BASEDIR = os.path.abspath(os.path.dirname(sys.argv[0]))
 DAY = os.path.basename(BASEDIR)
@@ -37,19 +37,13 @@ for line in lines:
    bonus.insert(0, card_num)
    points[card_num] = bonus
 
-queue = sorted(points.keys())
-cards = list()
+queue = deque(sorted(points.keys()))
 
 total = 0
 while len(queue) > 0:
-   n = queue.pop(0)
    total += 1
-   #cards.append(n)
-   if len(points[n]) > 1:
-      queue.extend(points[n][1:])
+   n = queue.popleft()
+   if len(points[n]) <= 1: continue
+   queue.extend(points[n][1:])
 
-
-#print()
-#print(sorted(cards))
-#print(len(cards))
 print(total)
