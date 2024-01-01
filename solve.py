@@ -9,6 +9,8 @@ DAY = os.path.basename(BASEDIR)
 
 INPUT = os.path.abspath(f"{BASEDIR}/../input/{DAY}/input.txt")
 
+sys.path.append(os.path.abspath(f"{BASEDIR}/../lib"))
+
 lines = list()
 
 with open(INPUT, "r") as f:
