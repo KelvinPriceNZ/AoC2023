@@ -1,32 +1,52 @@
-from typing import Self
+from typing import Self, Any
+
+"""
+Unbalanced binary tree
+"""
 
 class BinaryTree:
-  label: str
-  cond: bool
+  datum: Any
   left: Self | None = None
   right: Self | None = None
 
-  def __init__(self, label: str, cond: bool) -> Self:
-    self.label = label
-    self.cond = cond
+  def __init__(self, datum: Any) -> None:
+    self.datum = datum
 
-  def addNode(self, label: str, cond: bool) -> None:
-    node = BinaryTree(label, cond)
-    if cond:
-      self.left = node
-    else:
-      self.right = node
+  def __lt__(self, other: Self) -> bool:
+    return self.datum < other.datum
+
+  def addNode(self, datum: str) -> Self:
+    node = BinaryTree(datum)
+    branch = self
+    while datum < branch.datum:
+      if branch.left:
+        branch = branch.left
+      else:
+        break
+    while datum > branch.datum:
+      if branch.right:
+        branch = branch.right
+      else:
+        break
+
+    if datum < branch.datum:
+      branch.left = node
+    if datum > branch.datum:
+      branch.right = node
+
+    return node
 
   def __str__(self) -> str:
-    return f"{self.label} : [ L:{self.left} ^ R:{self.right} ]"
+    return f"{self.datum} : [ L:{self.left} ^ R:{self.right} ]"
 
 
 if __name__ == "__main__":
   def dfs(tree, depth=0):
-    print(f"{depth * "--"}{tree.label}")
-
     if tree.left:
       dfs(tree.left, depth + 1)
+
+    print(f"{depth * "--"}{tree.datum}")
+
     if tree.right:
       dfs(tree.right, depth + 1)
 
@@ -35,28 +55,28 @@ if __name__ == "__main__":
     q = [(tree, depth)]
     while q:
       (branch, depth), q = q[0], q[1:]
-      print(f"{depth * "--"}{branch.label}")
+      print(f"{depth * "--"}{branch.datum}")
       if branch.left:
         q.append((branch.left, depth + 1))
       if branch.right:
         q.append((branch.right, depth + 1))
 
 
-  t = BinaryTree("root", "a>2000")
+  root = BinaryTree((64, "^root"))
 
-  t.addNode("left", True)
-  t.addNode("right", False)
+  root.addNode((32, "<left"))
+  root.addNode((96, ">right"))
 
-  t.left.addNode("left.left", True)
-  t.left.addNode("left.right", False)
-  t.right.addNode("right.right", False)
-  t.right.addNode("right.left", True)
+  root.addNode((16, "<left <left"))
+  root.addNode((48, "<left >right"))
+  root.addNode((80, ">right <left"))
+  root.addNode((112, ">right >right"))
 
   print("Binary tree")
-  print(t)
+  print(root)
 
   print("DFS")
-  dfs(t)
+  dfs(root)
 
   print("BFS")
-  bfs(t)
+  bfs(root)
